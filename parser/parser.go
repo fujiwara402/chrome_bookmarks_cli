@@ -36,10 +36,10 @@ type MetaInfo struct {
 func (c Item) PrintItems() {
 	switch c.Type {
 	case "url":
-		fmt.Println(c.Name, ":", c.URL)
+		fmt.Println("⭐", c.Name, ":", c.URL)
 	case "folder":
 		fmt.Println()
-		fmt.Println(c.Name, "-------------")
+		fmt.Println("📂", c.Name)
 		for _, ch := range c.Items {
 			ch.PrintItems()
 		}
