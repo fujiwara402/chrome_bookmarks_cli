@@ -16,7 +16,6 @@ var (
 	root = kingpin.
 		Flag("root", "Select root directory. Choose from 'BookmarkBar', 'Synced' or 'Other'.").
 		Default("BookmarkBar").
-		Short('r').
 		Enum("BookmarkBar", "Synced", "Other")
 
 	dir = kingpin.
@@ -25,9 +24,22 @@ var (
 		String()
 
 	tree = kingpin.
-		Flag("tree", "show as tree").
+		Flag("tree", "Show as tree.").
 		Short('t').
 		Bool()
+
+	recursive = kingpin.
+			Flag("recursive", "Recursive print").
+			Short('r').
+			Bool()
+
+	showURL = kingpin.
+		Flag("show-url", "Show url.").
+		Bool()
+
+	showTitle = kingpin.
+			Flag("show-title", "Show title.").
+			Bool()
 )
 
 func main() {
@@ -55,11 +67,11 @@ func _main() error {
 
 	switch *root {
 	case "BookmarkBar":
-		bs.Root.BookmarkBar.PrintItems()
+		bs.Root.BookmarkBar.PrintItems(*showTitle, *showURL)
 	case "Synced":
-		bs.Root.Synced.PrintItems()
+		bs.Root.Synced.PrintItems(*showTitle, *showURL)
 	case "Other":
-		bs.Root.Other.PrintItems()
+		bs.Root.Other.PrintItems(*showTitle, *showURL)
 	default:
 		return errors.New("予期せぬエラーが発生しました")
 	}
