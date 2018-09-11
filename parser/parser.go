@@ -33,15 +33,20 @@ type MetaInfo struct {
 	LastVisitedDesktop string `json:"last_visited_desktop"`
 }
 
-func (c Item) PrintItems() {
+func (c Item) PrintItems(showTitle, showURL bool) {
 	switch c.Type {
 	case "url":
-		fmt.Println("⭐", c.Name, ":", c.URL)
+		if (showTitle && showURL) || (!showTitle && !showURL) {
+			fmt.Println("⭐", c.ID, c.Name, ":", c.URL)
+		} else if showTitle {
+			fmt.Println("⭐", c.ID, c.Name)
+		} else {
+			fmt.Println("⭐", c.ID, c.URL)
+		}
 	case "folder":
-		fmt.Println()
 		fmt.Println("📂", c.Name)
 		for _, ch := range c.Items {
-			ch.PrintItems()
+			ch.PrintItems(showTitle, showURL)
 		}
 	}
 }
@@ -51,6 +56,5 @@ func Perse(raw []byte) (*Bookmark, error) {
 	if err := json.Unmarshal(raw, bs); err != nil {
 		return nil, err
 	}
-
 	return bs, nil
 }
