@@ -41,10 +41,11 @@ func (c Item) PrintItems(showTitle, showURL bool) {
 		} else if showTitle {
 			fmt.Println("⭐", c.ID, c.Name)
 		} else {
-			fmt.Println("⭐", c.ID, c.URL)
+			// fmt.Println("⭐", c.ID, c.URL)
+			fmt.Println(c.URL)
 		}
 	case "folder":
-		fmt.Println("📂", c.Name)
+		// fmt.Println("📂", c.Name)
 		for _, ch := range c.Items {
 			ch.PrintItems(showTitle, showURL)
 		}
