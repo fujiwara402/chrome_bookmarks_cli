@@ -65,13 +65,23 @@ func _main() error {
 		return err
 	}
 
+	// select web app folder
+	var target parser.Item
+	for _, b := range bs.Root.Other.Items {
+		if b.Type == "folder" && b.Name == "web apps" {
+			target = b
+			break
+		}
+	}
+
 	switch *root {
 	case "BookmarkBar":
 		bs.Root.BookmarkBar.PrintItems(*showTitle, *showURL)
 	case "Synced":
 		bs.Root.Synced.PrintItems(*showTitle, *showURL)
 	case "Other":
-		bs.Root.Other.PrintItems(*showTitle, *showURL)
+		// bs.Root.Other.PrintItems(*showTitle, *showURL)
+		target.PrintItems(*showTitle, *showURL)
 	default:
 		return errors.New("予期せぬエラーが発生しました")
 	}
